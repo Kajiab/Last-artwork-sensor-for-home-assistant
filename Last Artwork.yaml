@@ -1,25 +1,4 @@
-template:
-  - sensor:
-      - name: "Last Active Media Player"
-        unique_id: last_active_media_player_t620
-        state: >-
-          {% set players = states.media_player | selectattr('state', 'in', ['playing', 'paused']) | sort(reverse=true, attribute='last_changed') | list %}
-          {% if players | count > 0 %}
-            media_player.{{ players[0].object_id }}
-          {% else %}
-            none
-          {% endif %}
-
-      - name: "Last Album Art"
-        unique_id: last_album_art_memory
-        state: >-
-          {% set player = states('sensor.last_active_media_player') %}
-          {% if player != 'none' and state_attr(player, 'entity_picture') != none %}
-            {{ state_attr(player, 'entity_picture') }}
-          {% else %}
-            {{ states('sensor.last_album_art') }}
-          {% endif %}
-          
+       
 template:
   - sensor:
 
@@ -55,3 +34,4 @@ template:
             {{ this.state }}
           {% endif %}
           
+
