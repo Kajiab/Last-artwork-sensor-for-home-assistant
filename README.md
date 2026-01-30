@@ -1,6 +1,6 @@
 # Last-artwork-sensor-for-home-assistant
 Using for remember artwork from last play in media player so card still show picture after stop play
-
+Inspiration from this topic https://community.home-assistant.io/t/getting-the-entity-picture-of-last-active-media-player/483119/2
 
 Can use this for calling sensor.
 
