@@ -1,0 +1,66 @@
+template:
+  - sensor:
+      - name: "Last Active Media Player"
+        unique_id: last_active_media_player_t620
+        state: >-
+          {% set players = states.media_player | selectattr('state', 'in', ['playing', 'paused']) | sort(reverse=true, attribute='last_changed') | list %}
+          {% if players | count > 0 %}
+            media_player.{{ players[0].object_id }}
+          {% else %}
+            none
+          {% endif %}
+
+      - name: "Last Album Art"
+        unique_id: last_album_art_memory
+        state: >-
+          {% set player = states('sensor.last_active_media_player') %}
+          {% if player != 'none' and state_attr(player, 'entity_picture') != none %}
+            {{ state_attr(player, 'entity_picture') }}
+          {% else %}
+            {{ states('sensor.last_album_art') }}
+          {% endif %}
+          
+template:
+  - sensor:
+
+      # ---------------------------------------------------------
+      # 1) หา media_player ตัวที่ active ล่าสุด (playing/paused)
+      # ---------------------------------------------------------
+      - name: Last Active Media Player
+        unique_id: last_active_media_player_t620
+        state: >-
+          {% set players = states.media_player
+              | selectattr('state', 'in', ['playing', 'paused'])
+              | sort(reverse=true, attribute='last_changed')
+              | list %}
+          {% if players | count > 0 %}
+            {{ players[0].entity_id }}
+          {% else %}
+            none
+          {% endif %}
+
+
+      # ---------------------------------------------------------
+      # 2) เก็บ artwork สุดท้าย ถ้าไม่มี player เล่นอยู่
+      # ---------------------------------------------------------
+      - name: Last Album Art
+        unique_id: last_album_art_memory
+        state: >-
+          {% set p = states('sensor.last_active_media_player') %}
+          {% set art = state_attr(p, 'entity_picture') %}
+          
+          {% if p != 'none' and art not in [none, '', 'unknown'] %}
+            {{ art }}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+          
+          
+entity_picture: >
+ [[[
+   return states['sensor.last_album_art'].state;
+ ]]]
+ 
+background-image: >
+  url('[[[ return states["sensor.last_album_art"].state ]]]')
+  
