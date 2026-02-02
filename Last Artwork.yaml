@@ -31,7 +31,10 @@ template:
           {% if p != 'none' and art not in [none, '', 'unknown'] %}
             {{ art }}
           {% else %}
-            {{ this.state }}
+            {% set fallback = ['1.jpg','2.jpg','3.jpg','4.jpg'] %}
+            {{ '/local/fallback_art/' ~ (fallback | random) }}     #In case of file haven't artwork, it's will select from /local/fallback_art/
           {% endif %}
+
           
+
 
