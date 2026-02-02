@@ -5,6 +5,8 @@ Inspiration from this topic https://community.home-assistant.io/t/getting-the-en
 
 Add code to configuration.yaml
 
+You can create folder /local/fallback_art for sensor using when file haven't artwork
+
 Can use this for calling sensor.
 
 entity_picture: >
