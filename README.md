@@ -101,3 +101,8 @@ Great for dashboards that show artwork persistently even when playback stops.
 
 Community forum discussing how to display last artwork:
 https://community.home-assistant.io/t/getting-the-entity-picture-of-last-active-media-player/483119/2
+
+📜 License
+
+This project is open source and available under the MIT License
+.
